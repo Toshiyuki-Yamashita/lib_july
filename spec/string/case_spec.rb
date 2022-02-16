@@ -4,14 +4,14 @@ require "string/case"
 RSpec.describe Case do
   using Case
   it "is nil" do
-    expect("".case {}).to eq nil
+    expect("".case).to eq nil
   end
 
   it "is match /a/" do
     expect("abcde".case.when(/a/) {_2.to_s}).to eq "a"
   end
 
-  it "is match /a/ or /b/" do 
+  it "is match /a/ or /b/" do
     expect("abcde".case.when(/a/, /b/) {_2.to_s}).to eq "a"
   end
 end
