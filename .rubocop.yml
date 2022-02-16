@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 3.1
 
@@ -15,3 +17,6 @@ Layout/LineLength:
 Metrics/BlockLength:
   Exclude:
     - "**/*_spec.rb"
+
+RSpec/NestedGroups:
+  Max: 5
