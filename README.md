@@ -22,7 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+* module Case
+
+`string#case` can use like 'case/when' statement with method chain instead of syntax.
+`#when` takes Regexp objects and a block.
+When the string  matched to one of Regexp objects, the block would be invoked with the string and MatchData object.
+if one `#when` matched, the others couldn't match anymore.
+`#else` takes a block. When all `#when` could't match, the block would be invoked with the string.
+
+```ruby
+require 'string/case'
+
+using Case
+["abcde", "12345", "++++"].each do |s|
+  puts  s.case
+        .when(/a/) {|str, m| [str, m].join(',')}
+        .when(/1/,/b/) {|str, m| [str, m].join(',')}
+        .else{ |str| "not matched"}
+end
+# =>
+# abcde,a
+# 12345,1
+# not matched
+
+```
+
+
 
 ## Development
 
