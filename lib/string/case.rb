@@ -15,7 +15,7 @@ module Case
       end
 
       def when(*pattern, &)
-        pattern.lazy.map { |pat| pat.match(@input) }.detect{_1}&.then do |m|
+        pattern.lazy.map { |pat| pat.match(@input) }.compact.first&.then do |m|
           __setobj__(yield @input, m)
           %i[when else].each do |name|
             instance_eval "def #{name}(*arg, &) = self", __FILE__, __LINE__
