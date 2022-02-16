@@ -15,14 +15,11 @@ module Case
       end
 
       def when(*pattern, &)
-        pattern.each do |pat|
-          next unless (m = pat.match(@input))
-
+        pattern.lazy.map { |pat| pat.match(@input) }.detect{_1}&.then do |m|
           __setobj__(yield @input, m)
           %i[when else].each do |name|
             instance_eval "def #{name}(*arg, &) = self", __FILE__, __LINE__
           end
-          break
         end
         self
       end
