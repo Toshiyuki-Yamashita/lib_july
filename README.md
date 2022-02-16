@@ -29,7 +29,7 @@ Or install it yourself as:
 When the string  matched to one of Regexp objects, the block would be invoked with the string and MatchData object.
 if one `#when` matched, the others couldn't match anymore.
 `#else` takes a block. When all `#when` could't match, the block would be invoked with the string.
-This statement returns the return value of the block invoked from `#when` or `else`, otherwise nil.
+This statement returns the return value of the block invoked from `#when` or `#else`, otherwise nil.
 
 ```ruby
 require 'string/case'
