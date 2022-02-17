@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../july"
 require "delegate"
 
 module July
