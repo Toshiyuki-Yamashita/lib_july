@@ -19,7 +19,7 @@ RSpec.describe Case do
     end
 
     describe "matched to 'abcde'" do
-      subject(:with) { str.case.when(*regexp){_2.to_s} }
+      subject(:with) { str.case.when(*regexp) {_2.to_s } }
 
       describe "#when /a/" do
         let(:str) { "abcde" }

@@ -2,6 +2,7 @@ require: rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 3.1
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -20,3 +21,6 @@ Metrics/BlockLength:
 
 RSpec/NestedGroups:
   Max: 5
+
+Style/NumberedParametersLimit:
+  Enabled: false

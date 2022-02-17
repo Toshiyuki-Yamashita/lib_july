@@ -9,8 +9,7 @@ module Case
     # case implementation
     class CaseStubs < SimpleDelegator
       def initialize(str)
-        super
-        __setobj__(nil)
+        super(nil)
         @input = str
       end
 
@@ -18,7 +17,7 @@ module Case
         pattern.lazy.map { |pat| pat.match(@input) }.compact.first&.then do |m|
           __setobj__(yield @input, m)
           %i[when else].each do |name|
-            instance_eval "def #{name}(*arg, &) = self", __FILE__, __LINE__
+            instance_eval "def #{name}(*arg, &) = self", __FILE__, __LINE__ # reset #when and #else
           end
         end
         self

@@ -10,6 +10,9 @@ gem "rake", "~> 13.0"
 
 gem "rspec", "~> 3.0"
 
+gem "rbs", ">=1.6.2"
 gem "rubocop", "~> 1.21"
 gem "rubocop-rake"
 gem "rubocop-rspec"
+gem "solargraph"
+gem "typeprof", ">=0.20.0"
