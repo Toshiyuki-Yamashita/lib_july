@@ -3,6 +3,7 @@ require: rubocop-rspec
 AllCops:
   TargetRubyVersion: 3.1
   NewCops: enable
+  CacheRootDirectory: ./tmp/cache
 
 Style/StringLiterals:
   Enabled: true
