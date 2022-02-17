@@ -32,7 +32,7 @@ if one `#when` matched, the others couldn't match anymore.
 This statement returns the return value of the block invoked from `#when` or `#else`, otherwise nil.
 
 ```ruby
-require 'string/case'
+require 'july/string/case'
 
 using July::String::Case
 ["abcde", "12345", "++++"].each do |s|
