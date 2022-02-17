@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "string/case"
-RSpec.describe Case do
+require "july/string/case"
+RSpec.describe July::String::Case do
   using described_class
   describe "String#case" do
     describe "not matched" do

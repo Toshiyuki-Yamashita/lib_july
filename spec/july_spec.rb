@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe LibJuly do
+RSpec.describe July do
   it "has a version number" do
-    expect(LibJuly::VERSION).not_to be nil
+    expect(July::VERSION).not_to be nil
   end
 end

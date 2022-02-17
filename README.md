@@ -34,7 +34,7 @@ This statement returns the return value of the block invoked from `#when` or `#e
 ```ruby
 require 'string/case'
 
-using Case
+using July::String::Case
 ["abcde", "12345", "++++"].each do |s|
   puts  s.case
         .when(/a/) {|str, m| [str, m].join(',')}

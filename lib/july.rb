@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "lib_july/version"
+require_relative "july/version"
 
-module LibJuly
+module July
   class Error < StandardError; end
   # Your code goes here...
 end
