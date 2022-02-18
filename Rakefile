@@ -10,8 +10,3 @@ require "rubocop/rake_task"
 RuboCop::RakeTask.new
 
 task default: %i[spec rubocop]
-
-task push: %i[spec rubocop build] do
-  sh "gem", "push", "--key", "github", "--host", "https://rubygems.pkg.github.com/Toshiyuki-Yamashita",
-     "pkg/lib_july-#{July::VERSION}.gem"
-end
