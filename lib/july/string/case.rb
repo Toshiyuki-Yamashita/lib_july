@@ -10,14 +10,13 @@ module July
       module Impl
         # case implementation
         class CaseStubs < SimpleDelegator
-          def initialize(str, bloc)
+          def initialize(bloc)
             super(nil)
-            @input = [str, bloc.curry[str]]
+            @evalue = bloc
           end
 
           def when(*pattern, &)
-            _, bloc = @input
-            pattern.lazy.map(&bloc).compact.first&.then do |m|
+            pattern.lazy.map(&@evalue).compact.first&.then do |m|
               __setobj__(yield(*m))
               instance_exec do
                 def when(*_args, &) = self
@@ -28,8 +27,7 @@ module July
           end
 
           def else(&)
-            str, = @input
-            __setobj__(yield str)
+            __setobj__(yield)
             self
           end
         end
@@ -38,9 +36,9 @@ module July
         # case matching method
         def case(&bloc)
           if block_given?
-            Impl::CaseStubs.new(self, bloc)
+            Impl::CaseStubs.new(bloc.curry[self])
           else
-            self.case { |str, arg| arg.match(str)&.then { |m| [str, m] } }
+            self.case { |str, arg| arg.match(str) }
           end
         end
       end

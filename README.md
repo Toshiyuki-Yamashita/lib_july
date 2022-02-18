@@ -38,8 +38,8 @@ require 'july/string/case'
 using July::String::Case
 ["abcde", "12345", "++++"].each do |s|
   puts  s.case
-        .when(/a/) {|str, m| [str, m].join(',')}
-        .when(/1/,/b/) {|str, m| [str, m].join(',')}
+        .when(/a/) {|m| [s, m].join(',')}
+        .when(/1/,/b/) {|m| [s, m].join(',')}
         .else{ |str| "not matched"}
 end
 # =>
@@ -52,10 +52,10 @@ When the block returned nil, the comparison would be false.
 Otherwise, the block must return Array, which would be passed as the block parameter of `#when` method.
 
 ```ruby
-puts "abcde".case { |str, pattern | str.match(pattern)&.captures&.then{_1}}
+puts "abcde".case { |str, pattern | str.match(pattern)&.captures}
         .when(/(a)/) {|c| c}
         .when(/1/,/b/) {|c| c}
-        .else{ |str| "not matched"}
+        .else{ "not matched"}
 # =>
 # a
 ```
