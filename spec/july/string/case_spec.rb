@@ -39,5 +39,42 @@ RSpec.describe July::String::Case do
         end
       end
     end
+
+    describe "match when x 2 and else" do
+      subject(:obj) do
+        str.case
+           .when(*regexp[0]){_2.to_s}
+           .when(*regexp[1]){_2.to_s}
+           .else{_1}
+      end
+
+      let(:str) { "abcde" }
+
+      context "when match 1st" do
+        let(:regexp) do
+          [
+            [/a/],
+            [/1/]
+          ]
+        end
+
+        it "is 'a'" do
+          expect(obj).to eq "a"
+        end
+      end
+
+      context "when match 2nd" do
+        let(:regexp) do
+          [
+            [/1/],
+            [/a/]
+          ]
+        end
+
+        it "is 'a'" do
+          expect(obj).to eq "a"
+        end
+      end
+    end
   end
 end
