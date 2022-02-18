@@ -1,7 +1,8 @@
 # LibJuly
 
 LibJuly is some functions and classes that can use well in ruby programming.
-
+This project is for my learning ruby gem development.
+Of cource you can use LibJuly  free.
 ## Installation
 
 Add this line to your application's Gemfile:
