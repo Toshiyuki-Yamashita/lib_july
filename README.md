@@ -1,15 +1,15 @@
 # LibJuly
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/lib_july`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+LibJuly is some functions and classes that can use well in ruby programming.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'lib_july'
+source "https://rubygems.pkg.github.com/Toshiyuki-Yamashita" do
+    gem 'lib_july'
+end
 ```
 
 And then execute:
@@ -22,9 +22,9 @@ Or install it yourself as:
 
 ## Usage
 
-* module Case
+* module July::String::Case
 
-`string#case` can use like 'case/when' statement with method chain instead of syntax.
+`String#case` can use like 'case/when' statement with method chain instead of syntax.
 `#when` takes Regexp objects and a block.
 When the string  matched to one of Regexp objects, the block would be invoked with the string and MatchData object.
 if one `#when` matched, the others couldn't match anymore.
