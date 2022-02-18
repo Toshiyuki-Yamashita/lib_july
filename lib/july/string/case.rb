@@ -17,7 +17,7 @@ module July
 
           def when(*pattern, &)
             pattern.lazy.map(&@evalue).compact.first&.then do |m|
-              __setobj__(yield(*m))
+              __setobj__(yield m)
               instance_exec do
                 def when(*_args, &) = self
                 def else(&) = self

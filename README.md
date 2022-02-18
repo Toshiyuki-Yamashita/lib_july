@@ -49,12 +49,12 @@ end
 ```
 `#case` can take block to customize the  comparison between the string and pattern in `#when` method.
 When the block returned nil, the comparison would be false.
-Otherwise, the block must return Array, which would be passed as the block parameter of `#when` method.
+Otherwise, the return value of block woudld be passed as the block parameter of `#when` method.
 
 ```ruby
 puts "abcde".case { |str, pattern | str.match(pattern)&.captures}
-        .when(/(a)/) {|c| c}
-        .when(/1/,/b/) {|c| c}
+        .when(/(a)/) {|c, | c}
+        .when(/1/,/b/) {|c, | c}
         .else{ "not matched"}
 # =>
 # a
