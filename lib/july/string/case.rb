@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "delegate"
-
 module July
   module String
     # refinement module for case matching
