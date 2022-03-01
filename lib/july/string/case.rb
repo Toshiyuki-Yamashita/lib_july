@@ -10,16 +10,18 @@ module July
       module Impl
         # case implementation
         class CaseStubs
+          attr_reader :end
+
           def initialize(bloc)
             @evalue = bloc
-            @ret = nil
+            @end = nil
           end
 
           def when(*pattern, &)
             pattern.lazy.map(&@evalue).compact.first&.then do |m|
-              @ret = yield m
+              @end = yield m
               instance_exec do
-                def when(*_args, &) = self
+                def when(*, &) = self
                 def else(&) = self
               end
             end
@@ -27,11 +29,9 @@ module July
           end
 
           def else(&)
-            @ret = yield
+            @end = yield
             self
           end
-
-          def end() = @ret
         end
       end
       refine ::String do
