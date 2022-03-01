@@ -9,7 +9,7 @@ module July
       # implementation classes
       module Impl
         # case implementation
-        class CaseStubs
+        class Case
           attr_reader :end
 
           def initialize(bloc)
@@ -38,7 +38,7 @@ module July
         # case matching method
         def case(&bloc)
           if block_given?
-            Impl::CaseStubs.new(bloc.curry[self])
+            Impl::Case.new(bloc.curry[self])
           else
             self.case { |str, arg| arg.match(str) }
           end
