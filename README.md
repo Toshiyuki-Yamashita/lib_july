@@ -41,6 +41,7 @@ using July::String::Case
         .when(/a/) {|m| [s, m].join(',')}
         .when(/1/,/b/) {|m| [s, m].join(',')}
         .else{ |str| "not matched"}
+        .end
 end
 # =>
 # abcde,a
@@ -56,6 +57,7 @@ puts "abcde".case { |str, pattern | str.match(pattern)&.captures}
         .when(/(a)/) {|c, | c}
         .when(/1/,/b/) {|c, | c}
         .else{ "not matched"}
+        .end
 # =>
 # a
 ```

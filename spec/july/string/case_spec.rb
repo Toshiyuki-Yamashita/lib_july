@@ -9,19 +9,19 @@ RSpec.describe July::String::Case do
     describe "not matched" do
       context "when only case" do
         it "is nil" do
-          expect("".case).to be_falsy
+          expect("".case.end).to be_nil
         end
       end
 
       context "without else" do
         it "is nil" do
-          expect("".case.when(/a/, &:to_s)).to be_falsy
+          expect("".case.when(/a/, &:to_s).end).to be_nil
         end
       end
     end
 
     describe "matched to 'abcde'" do
-      subject(:with) { str.case.when(*regexp, &:to_s) }
+      subject(:with) { str.case.when(*regexp, &:to_s).end }
 
       describe "#when /a/" do
         let(:str) { "abcde" }
@@ -48,6 +48,7 @@ RSpec.describe July::String::Case do
            .when(*regexp[0], &:to_s)
            .when(*regexp[1], &:to_s)
            .else { "else!" }
+           .end
       end
 
       let(:str) { "abcde" }

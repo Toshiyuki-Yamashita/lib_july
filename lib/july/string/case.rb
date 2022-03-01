@@ -9,15 +9,15 @@ module July
       # implementation classes
       module Impl
         # case implementation
-        class CaseStubs < SimpleDelegator
+        class CaseStubs
           def initialize(bloc)
-            super(nil)
             @evalue = bloc
+            @ret = nil
           end
 
           def when(*pattern, &)
             pattern.lazy.map(&@evalue).compact.first&.then do |m|
-              __setobj__(yield m)
+              @ret = yield m
               instance_exec do
                 def when(*_args, &) = self
                 def else(&) = self
@@ -27,9 +27,11 @@ module July
           end
 
           def else(&)
-            __setobj__(yield)
+            @ret = yield
             self
           end
+
+          def end() = @ret
         end
       end
       refine ::String do
