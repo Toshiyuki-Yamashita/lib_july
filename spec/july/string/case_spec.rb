@@ -1,19 +1,21 @@
 # frozen_string_literal: true
 
+require "rspec/expectations"
 require "july/string/case"
+
 RSpec.describe July::String::Case do
   using described_class
   describe "String#case" do
     describe "not matched" do
       context "when only case" do
         it "is nil" do
-          expect("".case).to eq nil
+          expect("".case).to be_falsy
         end
       end
 
       context "without else" do
         it "is nil" do
-          expect("".case.when(/a/, &:to_s)).to eq nil
+          expect("".case.when(/a/, &:to_s)).to be_falsy
         end
       end
     end
