@@ -44,11 +44,9 @@ RSpec.describe July::String::Case do
 
     describe "match when x 2 and else" do
       subject(:obj) do
-        str.case
-           .when(*regexp[0], &:to_s)
-           .when(*regexp[1], &:to_s)
-           .else { "else!" }
-           .end
+        regexp.inject(str.case) { |c, i| c.when(*i, &:to_s) }
+              .else { "else!" }
+              .end
       end
 
       let(:str) { "abcde" }
