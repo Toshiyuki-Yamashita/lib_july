@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "july"
 module July
   module String
     # refinement module for case matching
@@ -16,14 +17,16 @@ module July
           end
 
           def when(*pattern, &action)
-            raise SyntaxError, "unexpected 'when'" if defined_else?
+            raise July::UnexpectedMethodCall.new, "unexpected 'when'" if defined_else?
+            raise ArgumentError.new, "needs to pass block" unless block_given?
 
             @actions.push({ type: :when, pattern:, action: })
             self
           end
 
           def else(&action)
-            raise SyntaxError, "unexpected 'else'" if defined_else?
+            raise July::UnexpectedMethodCall.new, "unexpected 'else'" if defined_else?
+            raise ArgumentError.new, "needs to pass block" unless block_given?
 
             @actions.push({ type: :else, action: })
             self
@@ -31,10 +34,7 @@ module July
 
           def end = detect_action&.then(&:call)
 
-          def defined_else?
-            last = @actions.last
-            !last.nil? && last[:type] == :else
-          end
+          def defined_else? = @actions.last&.fetch(:type) == :else
 
           private
 
@@ -44,7 +44,7 @@ module July
             @actions.lazy.map do |elm|
               case elm
               in {type: :when, pattern:, action: }
-                evaluete(pattern)&.then { |m| proc { action.call(m) } }
+                evaluete(pattern)&.then { |m| proc { action&.call(m) } }
               in {type: :else, action:}
                 action
               else
