@@ -11,7 +11,7 @@ module July
           attr_accessor :actions
 
           def initialize(bloc)
-            @evalue = bloc
+            @eval = bloc
             @actions = []
           end
 
@@ -38,7 +38,7 @@ module July
 
           private
 
-          def evaluete(pattern) = pattern.lazy.map(&@evalue).compact.first
+          def evaluete(pattern) = pattern.lazy.map(&@eval).compact.first
 
           def detect_action
             @actions.lazy.map do |elm|
