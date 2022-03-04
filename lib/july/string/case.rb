@@ -8,27 +8,49 @@ module July
       module Impl
         # case implementation
         class Case
-          attr_reader :end
+          attr_accessor :actions
 
           def initialize(bloc)
             @evalue = bloc
-            @end = nil
+            @actions = []
           end
 
-          def when(*pattern, &)
-            pattern.lazy.map(&@evalue).compact.first&.then do |m|
-              @end = yield m
-              instance_exec do
-                def when(*, &) = self
-                def else(&) = self
+          def when(*pattern, &action)
+            raise SyntaxError, "unexpected 'when'" if defined_else?
+
+            @actions.push({ type: :when, pattern:, action: })
+            self
+          end
+
+          def else(&action)
+            raise SyntaxError, "unexpected 'else'" if defined_else?
+
+            @actions.push({ type: :else, action: })
+            self
+          end
+
+          def end = detect_action&.then(&:call)
+
+          def defined_else?
+            last = @actions.last
+            !last.nil? && last[:type] == :else
+          end
+
+          private
+
+          def evaluete(pattern) = pattern.lazy.map(&@evalue).compact.first
+
+          def detect_action
+            @actions.lazy.map do |elm|
+              case elm
+              in {type: :when, pattern:, action: }
+                evaluete(pattern)&.then { |m| proc { action.call(m) } }
+              in {type: :else, action:}
+                action
+              else
+                nil
               end
-            end
-            self
-          end
-
-          def else(&)
-            @end = yield
-            self
+            end.compact.first
           end
         end
       end
