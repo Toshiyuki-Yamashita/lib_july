@@ -3,7 +3,7 @@
 module July
   # File I/O
   module File
-    reine Array do
+    refine Array do
       def open(...)
         each do |path|
           File.open(path, ...)
