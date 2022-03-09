@@ -11,8 +11,8 @@ module July
         class Case
           attr_accessor :actions
 
-          def initialize(bloc)
-            @eval = bloc
+          def initialize(eval)
+            @eval = eval
             @actions = []
           end
 
@@ -44,7 +44,7 @@ module July
             @actions.lazy.map do |elm|
               case elm
               in {type: :when, pattern:, action: }
-                evaluete(pattern)&.then { |m| proc { action.call(m) } }
+                evaluete(pattern)&.then { |m| proc { action&.call(m) } }
               in {type: :else, action:}
                 action
               else
@@ -56,9 +56,9 @@ module July
       end
       refine ::String do
         # case matching method
-        def case(&bloc)
+        def case(&)
           if block_given?
-            bloc&.then{ Impl::Case.new(_1.curry[self])}
+            Impl::Case.new(->(regexp) { yield self, regexp })
           else
             self.case { |str, arg| arg.match(str) }
           end
