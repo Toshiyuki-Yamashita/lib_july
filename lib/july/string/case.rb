@@ -44,7 +44,7 @@ module July
             @actions.lazy.map do |elm|
               case elm
               in {type: :when, pattern:, action: }
-                evaluete(pattern)&.then { |m| proc { action&.call(m) } }
+                evaluete(pattern)&.then { |m| proc { action.call(m) } }
               in {type: :else, action:}
                 action
               else
@@ -58,7 +58,7 @@ module July
         # case matching method
         def case(&bloc)
           if block_given?
-            Impl::Case.new(bloc.curry[self])
+            bloc&.then{ Impl::Case.new(_1.curry[self])}
           else
             self.case { |str, arg| arg.match(str) }
           end

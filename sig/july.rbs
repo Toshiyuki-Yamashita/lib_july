@@ -1,4 +1,46 @@
 module July
-  VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  class Error < StandardError
+  end
+
+  class UnexpectedMethodCall < StandardError
+  end
+end
+
+module July
+  module String
+    # refinement module for case matching
+    module Case
+      # implementation classes
+      module Impl
+        # case implementation
+        class Case
+          attr_accessor actions: [ ] 
+          | Array[ 
+            {type: :when, pattern: ::Array[::Regexp], action: ^(untyped)->untyped } |
+            {type: :else, action: ^()->untyped } 
+           ]
+
+          def initialize: (^(Regexp)->untyped) -> void
+
+          def when: (*Regexp pattern) { (::Regexp) -> untyped } -> self
+
+          def else: () { () -> untyped } -> self
+
+          def end: () -> untyped
+
+          def defined_else?: () -> bool
+
+          private
+
+          def evaluete: (Array[::Regexp] pattern) -> untyped
+
+          def detect_action: () ->  untyped
+        end
+      end
+    end
+  end
+end
+
+module July
+  VERSION: ::String
 end
