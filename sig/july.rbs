@@ -14,15 +14,15 @@ module July
       module Impl
         # case implementation
         class Case
-          attr_accessor actions: [ ] 
+          attr_accessor actions: ( [ ] 
           | Array[ 
-            {type: :when, pattern: ::Array[::Regexp], action: ^(untyped)->untyped } |
+            {type: :when, pattern: ::Array[::Regexp], action: ^(::MatchData)->untyped } |
             {type: :else, action: ^()->untyped } 
-           ]
+           ] )
 
-          def initialize: (^(Regexp)->untyped) -> void
+          def initialize: (^(::Regexp)->untyped) -> void
 
-          def when: (*Regexp pattern) { (::Regexp) -> untyped } -> self
+          def when: (*::Regexp pattern) { (::Regexp) -> untyped } -> self
 
           def else: () { () -> untyped } -> self
 
@@ -34,9 +34,11 @@ module July
 
           def evaluete: (Array[::Regexp] pattern) -> untyped
 
-          def detect_action: () ->  untyped
+          def detect_action: () ->  (^() -> untyped | nil)
         end
       end
+      # refine String 
+      def case: ?{ (::String, ::Regexp) -> untyped } -> Impl::Case
     end
   end
 end
