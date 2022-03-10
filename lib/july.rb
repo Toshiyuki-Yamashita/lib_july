@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "july/version"
-
+# utility library for ruby
 module July
-  class Error < StandardError; end
-  class UnexpectedMethodCall < StandardError; end
-  # Your code goes here...
+  autoload :VERSION, "july/version"
+  autoload :Error, "july/common/exception"
+  autoload :UnexpectedMethodCall, "july/common/exception"
+  module String
+    autoload :Case, "july/string/case"
+  end
 end

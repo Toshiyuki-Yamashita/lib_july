@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rspec/expectations"
-require "july/string/case"
 
 RSpec.describe July::String::Case do
   using described_class
