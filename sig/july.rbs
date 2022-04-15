@@ -1,0 +1,58 @@
+# utility library for ruby
+module July
+  VERSION: untyped
+
+  module String
+    # refinement module for case matching
+    module Case
+      # implementation classes
+      module Impl
+        # case implementation
+        # @attr actions [Array<Hash<Symbol,Object>>]
+        # @private
+        class Case
+          def initialize: () ?{ (Regexp regexp) -> void } -> void
+
+          # define match condition and action block as  {|m| ... }
+          # 
+          # _@param_ `*pattern` — patterns to match
+          def when: (*::Array[Regexp] pattern) ?{ (untyped m) -> void } -> self
+
+          # define default action block as { ... }
+          # yield  action for else closure
+          def else: () -> self
+
+          # _@return_ — return value of case statement if action is executed
+          # 
+          # _@return_ — nil if action is not executed
+          def end: () -> untyped
+
+          # _@return_ — wheather else is defined or not
+          def defined_else?: () -> bool
+
+          # evaluate string and regexp
+          # 
+          # _@param_ `pattern` — patterns to match
+          # 
+          # _@return_ — nil if not matched
+          def evaluete: (::Array[Regexp] pattern) -> untyped
+
+          # execute matching and evaluate action
+          # 
+          # _@return_ — return value of action
+          def detect_action: () -> Object
+
+          attr_accessor actions: ::Array[::Hash[Symbol, Object]]
+        end
+      end
+    end
+  end
+
+  # unspecified error
+  class Error < StandardError
+  end
+
+  # unexpected method call
+  class UnexpectedMethodCall < StandardError
+  end
+end

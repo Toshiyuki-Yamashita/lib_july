@@ -8,10 +8,13 @@ module July
       # implementation classes
       module Impl
         # case implementation
+        # @attr actions [Array<Hash<Symbol,Object>>]
+        # @private
         class Case
           attr_accessor :actions
 
-          # @param eval[Proc] block to evaluate
+          # @yield  evaluate [regexp] block to evaluate
+          # @yieldparam regexp [Regexp] regexp to be matched
           # @return [void]
           def initialize(&evaluate)
             @eval = evaluate
@@ -20,7 +23,7 @@ module July
 
           # define match condition and action block as  {|m| ... }
           # @param *pattern[Array<Regexp>] patterns to match
-          # @yield [m] action when matched
+          # @yield  [m] action when matched
           # @yieldparam m  return value of case
           # @return [self]
           def when(*pattern, &action)
@@ -31,6 +34,9 @@ module July
             self
           end
 
+          # define default action block as { ... }
+          # yield  action for else closure
+          # @return [self]
           def else(&action)
             raise July::UnexpectedMethodCall.new, "unexpected 'else'" if defined_else?
             raise ArgumentError.new, "needs to pass block" unless block_given?
@@ -39,14 +45,25 @@ module July
             self
           end
 
+          # @return  return value of case statement if action is executed
+          # @return nil if action is not executed
           def end = detect_action&.then(&:call)
 
+          # @return [bool] wheather else is defined or not
           def defined_else? = @actions.last&.fetch(:type) == :else
 
           private
 
+          # @private
+          # evaluate string and regexp
+          # @param pattern [Array<Regexp>] patterns to match
+          # @return matchdata [MatchData] if mached
+          # @return nil if not matched
           def evaluete(pattern) = pattern.lazy.map(&@eval).compact.first
 
+          # @private
+          # execute matching and evaluate action
+          # @return [Object] return value of action
           def detect_action
             @actions.lazy.map do |elm|
               case elm
@@ -62,7 +79,11 @@ module July
         end
       end
       refine ::String do
-        # case matching method
+        # case matching method with evaluate block as {| me, arg| ... }
+        # yield [me, arg] block case match evaluation
+        # @yieldparam me [String] string to match
+        # @yieldparam arg [Regexp] Regexp to be matched
+        # @return [Impl::Case] case object
         def case(&)
           if block_given?
             Impl::Case.new { |regexp| yield self, regexp }
