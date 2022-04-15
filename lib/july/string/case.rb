@@ -11,11 +11,18 @@ module July
         class Case
           attr_accessor :actions
 
-          def initialize(eval)
-            @eval = eval
+          # @param eval[Proc] block to evaluate
+          # @return [void]
+          def initialize(&evaluate)
+            @eval = evaluate
             @actions = []
           end
 
+          # define match condition and action block as  {|m| ... }
+          # @param *pattern[Array<Regexp>] patterns to match
+          # @yield [m] action when matched
+          # @yieldparam m  return value of case
+          # @return [self]
           def when(*pattern, &action)
             raise July::UnexpectedMethodCall.new, "unexpected 'when'" if defined_else?
             raise ArgumentError.new, "needs to pass block" unless block_given?
@@ -58,7 +65,7 @@ module July
         # case matching method
         def case(&)
           if block_given?
-            Impl::Case.new(->(regexp) { yield self, regexp })
+            Impl::Case.new { |regexp| yield self, regexp }
           else
             self.case { |str, arg| arg.match(str) }
           end

@@ -1,0 +1,49 @@
+# utility library for ruby
+module July
+  VERSION: untyped
+
+  module String
+    # refinement module for case matching
+    module Case
+      # implementation classes
+      module Impl
+        # case implementation
+        class Case
+          # _@param_ `eval` — block to evaluate
+          def initialize: (Proc eval) -> void
+
+          # for a block {|m| ... }
+          # 
+          # _@param_ `*pattern` — patterns to match
+          def when: (*::Array[Regexp] pattern) ?{ (untyped m) -> void } -> self
+
+          # sord omit - no YARD return type given, using untyped
+          def else: () -> untyped
+
+          # sord omit - no YARD return type given, using untyped
+          def end: () -> untyped
+
+          def defined_else?: () -> bool
+
+          # sord omit - no YARD type given for "pattern", using untyped
+          # sord omit - no YARD return type given, using untyped
+          def evaluete: (untyped pattern) -> untyped
+
+          # sord omit - no YARD return type given, using untyped
+          def detect_action: () -> untyped
+
+          # Returns the value of attribute actions.
+          attr_accessor actions: untyped
+        end
+      end
+    end
+  end
+
+  # unspecified error
+  class Error < StandardError
+  end
+
+  # unexpected method call
+  class UnexpectedMethodCall < StandardError
+  end
+end
