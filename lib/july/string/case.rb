@@ -2,6 +2,7 @@
 
 require "july"
 module July
+  # string  utility library for ruby
   module String
     # refinement module for case matching
     module Case
@@ -13,7 +14,7 @@ module July
         class Case
           attr_accessor :actions
 
-          # @yield  evaluate [regexp] block to evaluate
+          # @yield [regexp] block  to evaluate
           # @yieldparam regexp [Regexp] regexp to be matched
           # @return [void]
           def initialize(&evaluate)
@@ -22,9 +23,9 @@ module July
           end
 
           # define match condition and action block as  {|m| ... }
-          # @param *pattern[Array<Regexp>] patterns to match
+          # @param [Array<Regexp>] pattern patterns to match
           # @yield  [m] action when matched
-          # @yieldparam m  return value of case
+          # @yieldparam [MatchData] m return value of match
           # @return [self]
           def when(*pattern, &action)
             raise July::UnexpectedMethodCall.new, "unexpected 'when'" if defined_else?
@@ -35,7 +36,7 @@ module July
           end
 
           # define default action block as { ... }
-          # yield  action for else closure
+          # @yield  action for else closure
           # @return [self]
           def else(&action)
             raise July::UnexpectedMethodCall.new, "unexpected 'else'" if defined_else?
@@ -57,8 +58,8 @@ module July
           # @private
           # evaluate string and regexp
           # @param pattern [Array<Regexp>] patterns to match
-          # @return matchdata [MatchData] if mached
-          # @return nil if not matched
+          # @return [MatchData] if one of patterns mached
+          # @return [nil] if none of patterns  matched
           def evaluete(pattern) = pattern.lazy.map(&@eval).compact.first
 
           # @private

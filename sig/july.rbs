@@ -15,11 +15,10 @@ module July
 
           # define match condition and action block as  {|m| ... }
           # 
-          # _@param_ `*pattern` — patterns to match
-          def when: (*::Array[Regexp] pattern) ?{ (untyped m) -> void } -> self
+          # _@param_ `pattern` — patterns to match
+          def when: (*::Array[Regexp] pattern) ?{ (MatchData m) -> void } -> self
 
           # define default action block as { ... }
-          # yield  action for else closure
           def else: () -> self
 
           # _@return_ — return value of case statement if action is executed
@@ -34,8 +33,10 @@ module July
           # 
           # _@param_ `pattern` — patterns to match
           # 
-          # _@return_ — nil if not matched
-          def evaluete: (::Array[Regexp] pattern) -> untyped
+          # _@return_ — if one of patterns mached
+          # 
+          # _@return_ — if none of patterns  matched
+          def evaluete: (::Array[Regexp] pattern) -> MatchData
 
           # execute matching and evaluate action
           # 
