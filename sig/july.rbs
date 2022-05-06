@@ -2,6 +2,7 @@
 module July
   VERSION: untyped
 
+  # string  utility library for ruby
   module String
     # refinement module for case matching
     module Case
